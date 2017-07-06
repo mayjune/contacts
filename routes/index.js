@@ -19,7 +19,6 @@ router.get('/search', function(req, res, next) {
         var q = qs['q'];
         var ddorae = qs['ddorae'];
         var birth = qs['birth'];
-        var current_year = new Date().getFullYear();
         // 기본
         var sql_stmt = "select * from contact ";
 
@@ -60,9 +59,7 @@ router.get('/search', function(req, res, next) {
                     };
 
                     if (ddorae) {
-                        var year = parseInt(common.splitDate(d['birth'])[0]);
-                        var age = current_year - year + 1;
-
+                        var age = common.getAge(d['birth']);
                         for (var j = 0; j < ddorae.length; j++) {
                             var start = parseInt(ddorae[j]),
                                 end = start + 9;
