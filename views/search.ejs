@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <!-- Site Properties -->
+  <title>Contacts of Hanaui</title>
+  <link rel="stylesheet" type="text/css" href="semantic/dist/semantic.css">
+
+  <!--- Site CSS -->
+  <link rel="stylesheet" type="text/css" href="semantic/dist/components/reset.css">
+  <link rel="stylesheet" type="text/css" href="semantic/dist/components/site.css">
+  <link rel="stylesheet" type="text/css" href="semantic/dist/components/grid.css">
+
+  <!--- Component CSS -->
+  <link rel="stylesheet" type="text/css" href="semantic/dist/components/icon.css">
+  <link rel="stylesheet" type="text/css" href="semantic/dist/components/input.css">
+  <link rel="stylesheet" type="text/css" href="semantic/dist/components/button.css">
+  <link rel="stylesheet" type="text/css" href="semantic/dist/components/divider.css">
+  <link rel="stylesheet" type="text/css" href="semantic/dist/components/label.css">
+  <link rel="stylesheet" type="text/css" href="semantic/dist/components/dropdown.css">
+  <link rel="stylesheet" type="text/css" href="semantic/dist/components/transition.css">
+  <link rel="stylesheet" type="text/css" href="semantic/dist/components/popup.css">
+
+</head>
+
+<body>
+
+<div class="ui attached stackable menu">
+  <div class="ui container">
+    <a class="item" href="/">
+      <i class="home icon"></i> Home
+    </a>
+    <a class="item" href="search">
+      <i class="search icon"></i> Search
+    </a>
+    <a class="item" href="create">
+      <i class="add user icon"></i> Create
+    </a>
+    <div class="right menu">
+      <a class="ui item">
+        Logout
+      </a>
+    </div>
+  </div>
+</div>
+<br><br>
+<div class="ui container">
+  <form>
+    <div class="ui form">
+      <div class="three fields">
+        <div class="field">
+          <label>또래</label>
+          <select name="ddorae" multiple="" class="ui dropdown">
+            <option value="">Select Age</option>
+            <option value="0">어린이</option>
+            <%
+              for (var i = 10; i < 61; i+=10) {
+            %>
+            <option value="<%=i%>"><%=i%>대</option>
+            <%
+              }
+            %>
+          </select>
+        </div>
+        <div class="field">
+          <label>생일</label>
+          <select name="birth" multiple="" class="ui dropdown">
+            <option value="">Select Birthday</option>
+            <%
+              for (var i = 1; i < 13; i++) {
+            %>
+            <option value="<%=i%>"><%=i%>월</option>
+            <%
+              }
+            %>
+          </select>
+        </div>
+        <div class="field">
+          <label>검색</label>
+          <div class="ui icon input">
+            <input type="text" name="q" placeholder="Search..." value="<%=query%>">
+            <i class="inverted circular search link icon"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+
+  <div class="ui grid">
+    <%
+      for (var i = 0 ; i < ret.length; i++) {
+        var default_img = "kristy.png";
+        if (ret[i]['sex'] == "man")
+          default_img = "matthew.png";
+
+    %>
+    <% if (i%3 == 0) { %>
+    <div class="three column row">
+    <% } %>
+      <div class="column">
+        <div class="ui card">
+          <div class="image">
+            <img src="/images/<%=ret[i]['portrait']%>" alt="no portrait" onerror="this.src='/images/<%=default_img%>';">
+          </div>
+          <div class="content">
+            <a class="header"><%=ret[i]['name']%> (<%=ret[i]['birth']%>)</a>
+            <div class="meta">
+              <span class="date">Joined in <%=ret[i]['first']%></span>
+            </div>
+            <div class="description">
+              <%=ret[i]['description']%>
+            </div>
+          </div>
+          <div class="extra content">
+            <a>
+              <i class="user icon"></i>
+              <%=ret[i]['phone']%>
+            </a>
+          </div>
+        </div>
+      </div>
+    <% if (i%3 == 2 || (i+1) == ret.length) { %>
+    </div>
+    <% } %>
+    <%
+      }
+    %>
+  </div>
+
+</div>
+
+
+
+<!--- Component JS -->
+<script src="semantic/dist/assets/library/jquery.min.js"></script>
+<!--<script src="semantic/assets/library/iframe-content.js"></script>-->
+<script type="text/javascript" src="semantic/dist/components/popup.js"></script>
+<script type="text/javascript" src="semantic/dist/components/dropdown.js"></script>
+<script type="text/javascript" src="semantic/dist/components/transition.js"></script>
+<script type="text/javascript" src="javascript/main.js"></script>
+
+</body>
+</html>

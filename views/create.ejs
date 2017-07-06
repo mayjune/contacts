@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+  <!-- Site Properties -->
+  <title>Contacts of Hanaui</title>
+  <link rel="stylesheet" type="text/css" href="semantic/dist/semantic.css">
+
+  <!--- Site CSS -->
+  <link rel="stylesheet" type="text/css" href="semantic/dist/components/reset.css">
+  <link rel="stylesheet" type="text/css" href="semantic/dist/components/site.css">
+  <link rel="stylesheet" type="text/css" href="semantic/dist/components/grid.css">
+
+  <!--- Component CSS -->
+  <link rel="stylesheet" type="text/css" href="semantic/dist/components/icon.css">
+  <link rel="stylesheet" type="text/css" href="semantic/dist/components/input.css">
+  <link rel="stylesheet" type="text/css" href="semantic/dist/components/button.css">
+  <link rel="stylesheet" type="text/css" href="semantic/dist/components/divider.css">
+  <link rel="stylesheet" type="text/css" href="semantic/dist/components/label.css">
+  <link rel="stylesheet" type="text/css" href="semantic/dist/components/dropdown.css">
+  <link rel="stylesheet" type="text/css" href="semantic/dist/components/transition.css">
+  <link rel="stylesheet" type="text/css" href="semantic/dist/components/popup.css">
+  <style>
+    .ui.action.input input[type="file"] {
+      display: none;
+    }
+  </style>
+  <script>
+    function captureReturnKey(e) {
+        if (e.keyCode == 13)
+            return false;
+    }
+  </script>
+
+</head>
+
+<body>
+
+<div class="ui attached stackable menu">
+  <div class="ui container">
+    <a class="item" href="/">
+      <i class="home icon"></i> Home
+    </a>
+    <a class="item" href="search">
+      <i class="search icon"></i> Search
+    </a>
+    <a class="item" href="create">
+      <i class="add user icon"></i> Create
+    </a>
+    <div class="right menu">
+      <a class="ui item">
+        Logout
+      </a>
+    </div>
+  </div>
+</div>
+<br><br>
+<div class="ui container">
+  <div class="ui attached message">
+    <div class="header">
+      하.나.의. 교회에 오신것을 환영합니다.
+    </div>
+    <p>주소록을 등록해 주셔서 감사합니다.</p>
+  </div>
+  <form class="ui form attached fluid segment" onkeydown="return captureReturnKey(event)">
+    <div class="two fields">
+      <div class="required field">
+        <label>이름</label>
+        <input name="name" placeholder="이름" type="text" autofocus required>
+      </div>
+      <div class="required field">
+        <label for="sex">성별</label>
+        <div class="ui form">
+          <div class="inline fields">
+            <div class="field">
+              <div class="ui radio checkbox">
+                <input type="radio" name="sex" value="man" checked="checked">
+                <label>남자</label>
+              </div>
+            </div>
+            <div class="field">
+              <div class="ui radio checkbox">
+                <input type="radio" name="sex" value="woman">
+                <label>여자</label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="two fields">
+      <div class="required field">
+        <label>생년월일</label>
+        <div class="inline fields">
+          <div class="field">
+            <select name="year1" class="ui fluid dropdown">
+              <option value="">년도</option>
+              <%
+                for (var i = 1950; i < 2018; i++) {
+              %>
+              <option value="<%=i%>"><%=i%></option>
+              <%
+              }
+              %>
+            </select>
+          </div>
+          <div class="field">
+            <select name="month1" class="ui fluid dropdown">
+              <option value="">월</option>
+              <%
+              for (var i = 1; i < 13; i++) {
+              %>
+              <option value="<%=i%>"><%=i%></option>
+              <%
+              }
+              %>
+            </select>
+          </div>
+          <div class="field">
+            <select name="day1" class="ui fluid dropdown">
+              <option value="">일</option>
+              <%
+              for (var i = 1; i < 32; i++) {
+              %>
+              <option value="<%=i%>"><%=i%></option>
+              <%
+              }
+              %>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="required field">
+        <label>하.나.의. 교회 다니기 시작한 날</label>
+        <div class="inline fields">
+          <div class="field">
+            <select name="year2" class="ui fluid dropdown">
+              <option value="">년도</option>
+                <%
+                for (var i = 2001; i < 2018; i++) {
+                %>
+              <option value="<%=i%>"><%=i%></option>
+                <%
+                }
+                %>
+            </select>
+          </div>
+          <div class="field">
+            <select name="month2" class="ui fluid dropdown">
+              <option value="">월</option>
+                <%
+                for (var i = 1; i < 13; i++) {
+                %>
+              <option value="<%=i%>"><%=i%></option>
+                <%
+                }
+                %>
+            </select>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <div class="required field">
+      <label>전화번호</label>
+      <input name="phone" placeholder="010-0000-0000" type="text" required>
+    </div>
+    <div class="field">
+      <label>자기 소개</label>
+      <textarea name="description" rows="2"></textarea>
+    </div>
+    <div class="field">
+      <label>사진업로드</label>
+      <div class="ui fluid action input">
+        <input name="portrait" type="text" readonly>
+        <input type="file">
+        <div class="ui icon button">
+          <i class="cloud upload icon"></i>
+        </div>
+      </div>
+    </div>
+
+    <!--
+    <div class="inline field">
+      <div class="ui checkbox">
+        <input type="checkbox" id="terms">
+        <label for="terms">I agree to the terms and conditions</label>
+      </div>
+    </div>
+    -->
+    <!--<div class="ui olive submit button">Submit</div>-->
+    <button class="ui olive button">Submit</button>
+  </form>
+
+
+</div>
+
+
+<!--- Component JS -->
+<script src="semantic/dist/assets/library/jquery.min.js"></script>
+<!--<script src="semantic/assets/library/iframe-content.js"></script>-->
+<script type="text/javascript" src="semantic/dist/components/popup.js"></script>
+<script type="text/javascript" src="semantic/dist/components/dropdown.js"></script>
+<script type="text/javascript" src="semantic/dist/components/transition.js"></script>
+<script type="text/javascript" src="javascript/main.js"></script>
