@@ -8,6 +8,9 @@ $(document)
                 on: 'click'
             })
         ;
+        $('.ui.accordion')
+            .accordion()
+        ;
     })
 ;
 
@@ -24,6 +27,12 @@ $('input:file', '.ui.action.input')
     })
 ;
 
-/*$('.ui.radio.checkbox')
+$('.ui.toggle.checkbox')
     .checkbox()
-;*/
+    .first().checkbox({
+    onChecked: function() {        $("label[for='"+$(this).attr("id")+"']").removeClass('dn').addClass('up').attr('data-content','ON');
+    },
+    onUnchecked: function() {
+        $("label[for='"+$(this).attr("id")+"']").removeClass('up').addClass('dn').attr('data-content','OFF');
+    }
+});

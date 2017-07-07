@@ -34,5 +34,28 @@ common.getAge = function(date) {
 
 };
 
+common.checkSearch = function (qs) {
+    var key;
+    var l = [];
+    for (key in qs) {
+        l.push(key)
+    }
+
+    if (l.length == 1 && ((l[0] == 'q' && l[0].length == 0) || l[0] == 'card_yn'))
+        return false;
+    else
+        return true;
+}
+
+/*
+Object.size = function(obj) {
+    var size = 0, key;
+    for (key in obj) {
+        if (obj.hasOwnProperty(key)) size++;
+    }
+    return size;
+};
+*/
+
 
 module.exports = common;

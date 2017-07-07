@@ -65,11 +65,12 @@
     </div>
     <p>주소록을 등록해 주셔서 감사합니다.</p>
   </div>
-  <form class="ui form attached fluid segment" onkeydown="return captureReturnKey(event)">
+  <form action="update" class="ui form attached fluid segment" onkeydown="return captureReturnKey(event)">
     <div class="two fields">
       <div class="required field">
         <label>이름</label>
-        <input name="name" placeholder="이름" type="text" autofocus required>
+        <input name="id" value="<%=data['id']%>" type="hidden"/>
+        <input name="name" value="<%=data['name']%>" placeholder="이름" type="text" autofocus required>
       </div>
       <div class="required field">
         <label for="sex">성별</label>
@@ -77,13 +78,21 @@
           <div class="inline fields">
             <div class="field">
               <div class="ui radio checkbox">
-                <input type="radio" name="sex" value="man" checked="checked">
+                <input type="radio" name="sex" value="man"
+                       <% if (data['sex'] == 'man') { %>
+                       checked="checked"
+                       <% } %>
+                >
                 <label>남자</label>
               </div>
             </div>
             <div class="field">
               <div class="ui radio checkbox">
-                <input type="radio" name="sex" value="woman">
+                <input type="radio" name="sex" value="woman"
+                        <% if (data['sex'] == 'woman') { %>
+                       checked="checked"
+                        <% } %>
+                >
                 <label>여자</label>
               </div>
             </div>
@@ -101,7 +110,11 @@
               <%
                 for (var i = 1930; i <= new Date().getFullYear(); i++) {
               %>
-              <option value="<%=i%>"><%=i%></option>
+              <option value="<%=i%>"
+                      <% if (data['year1'] == i) { %>
+                      selected=""
+                      <% } %>
+              ><%=i%></option>
               <%
               }
               %>
@@ -113,7 +126,11 @@
               <%
               for (var i = 1; i < 13; i++) {
               %>
-              <option value="<%=i%>"><%=i%></option>
+              <option value="<%=i%>"
+                      <% if (data['month1'] == i) { %>
+                      selected=""
+                      <% } %>
+              ><%=i%></option>
               <%
               }
               %>
@@ -125,7 +142,11 @@
               <%
               for (var i = 1; i < 32; i++) {
               %>
-              <option value="<%=i%>"><%=i%></option>
+              <option value="<%=i%>"
+                      <% if (data['day1'] == i) { %>
+                      selected=""
+                      <% } %>
+              ><%=i%></option>
               <%
               }
               %>
@@ -142,7 +163,11 @@
                 <%
                 for (var i = 2003; i <= new Date().getFullYear(); i++) {
                 %>
-              <option value="<%=i%>"><%=i%></option>
+              <option value="<%=i%>"
+                      <% if (data['year2'] == i) { %>
+                      selected=""
+                      <% } %>
+              ><%=i%></option>
                 <%
                 }
                 %>
@@ -154,7 +179,11 @@
                 <%
                 for (var i = 1; i < 13; i++) {
                 %>
-              <option value="<%=i%>"><%=i%></option>
+              <option value="<%=i%>"
+                      <% if (data['month2'] == i) { %>
+                      selected=""
+                      <% } %>
+              ><%=i%></option>
                 <%
                 }
                 %>
@@ -166,11 +195,11 @@
     </div>
     <div class="required field">
       <label>전화번호</label>
-      <input name="phone" placeholder="010-0000-0000" type="text" required>
+      <input name="phone" value="<%=data['phone']%>" placeholder="010-0000-0000" type="text" required>
     </div>
     <div class="field">
       <label>자기 소개</label>
-      <textarea name="description" rows="2"></textarea>
+      <textarea name="description" rows="2"><%=data['description']%></textarea>
     </div>
     <div class="field">
       <label>사진업로드</label>
@@ -191,11 +220,17 @@
       </div>
     </div>
     -->
-    <!--<div class="ui olive submit button">Submit</div>-->
-    <button class="ui olive button">Submit</button>
+    <div class="ui grid">
+      <div class="eight wide column">
+        <button class="ui primary button">Update</button>
+        <a class="ui button" href="/">Cancel</a>
+      </div>
+      <div class="eight wide column right aligned">
+        <a class="ui labeled icon red button" href="delete?id=<%=data['id']%>">
+          <i class="trash icon"></i>Delete</a>
+      </div>
+    </div>
   </form>
-
-
 </div>
 
 

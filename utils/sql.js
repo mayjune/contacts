@@ -89,13 +89,15 @@ sql.delete = function (id) {
 sql.update = function (data) {
     var sqlite3 = require('sqlite3').verbose();
     var db = new sqlite3.Database('db/contact.db');
+    var birthday = common.joinDate([data['year1'], data['month1'], data['day1']]);
+    var first = common.joinDate([data['year2'], data['month2']]);
     var sql_stmt = "update contact set " +
         "name=\"" + data['name'] + "\", " +
         "sex=\"" + data['sex'] + "\", " +
-        "birthday=\"" + data['birthday'] + "\", " +
+        "birthday=\"" + birthday + "\", " +
         "month=\"" + data['month1'] + "\", " +
         "phone=\"" + data['phone'] + "\", " +
-        "first=\"" + data['first'] + "\", " +
+        "first=\"" + first + "\", " +
         "description=\"" + data['description'] + "\" " +
         "where id=" + data['id'];
 

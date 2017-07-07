@@ -23,6 +23,7 @@
   <link rel="stylesheet" type="text/css" href="semantic/dist/components/dropdown.css">
   <link rel="stylesheet" type="text/css" href="semantic/dist/components/transition.css">
   <link rel="stylesheet" type="text/css" href="semantic/dist/components/popup.css">
+  <link rel="stylesheet" type="text/css" href="semantic/dist/components/table.css">
 
 </head>
 
@@ -40,7 +41,7 @@
       <i class="add user icon"></i> Create
     </a>
     <div class="right menu">
-      <a class="ui item">
+      <a class="ui item" href="logout">
         Logout
       </a>
     </div>
@@ -59,7 +60,12 @@
             <%
               for (var i = 10; i < 61; i+=10) {
             %>
-            <option value="<%=i%>"><%=i%>대</option>
+            <option value="<%=i%>"
+            <%
+            if (ddorae.includes(i.toString())) { %>
+                    selected=""
+            <% } %>
+            ><%=i%>대</option>
             <%
               }
             %>
@@ -72,11 +78,38 @@
             <%
               for (var i = 1; i < 13; i++) {
             %>
-            <option value="<%=i%>"><%=i%>월</option>
+            <option value="<%=i%>"
+            <%
+              if (birth.includes(i.toString())) { %>
+                selected=""
+              <% } %>
+            ><%=i%>월</option>
             <%
               }
             %>
           </select>
+          <div class="ui accordion">
+            <div class="title">
+              <i class="dropdown icon"></i>
+              Search Options
+            </div>
+            <div class="content">
+              <div class="inline field">
+                <div class="ui grid">
+                  <div class="four wide column">
+                    <div class="ui toggle checkbox">
+                      <input name="card_yn" value="on" type="checkbox" tabindex="0" class="hidden" <% if (card_yn) { %> checked <% } %>>
+                      <label>CardView</label>
+                    </div>
+                  </div>
+                  <div class="four wide column">
+                  </div>
+                  <div class="four wide column">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
         <div class="field">
           <label>검색</label>
@@ -89,6 +122,15 @@
     </div>
   </form>
 
+  <% if (ret.length > 0) { %>
+  <br>
+  <h4 class="ui horizontal divider header">
+    <i class="tag icon"></i>
+    Members
+  </h4>
+  <br>
+  <% } %>
+  <% if (card_yn) { %>
   <div class="ui grid">
     <%
       for (var i = 0 ; i < ret.length; i++) {
@@ -129,10 +171,43 @@
       }
     %>
   </div>
-
+  <% } else { %>
+  <% if (ret.length > 0) { %>
+  <table class="ui definition table">
+    <thead>
+    <tr><th></th>
+      <th>생일</th>
+      <th>전화번호</th>
+        <% if (admin) { %>
+      <th>편집</th>
+        <% } %>
+    </tr></thead>
+    <tbody>
+    <%
+    for (var i = 0 ; i < ret.length; i++) {
+    %>
+    <tr>
+      <td>
+        <% if (ret[i]['sex'] == 'woman') { %>
+        <i class="female icon"></i>
+        <% } else { %>
+        <i class="male icon"></i>
+        <% } %>
+        <%=ret[i]['name']%></td>
+      <td><%=ret[i]['birth']%> (<%=ret[i]['age']%>세)</td>
+      <td><%=ret[i]['phone']%></td>
+        <% if (admin) { %>
+      <td>
+        <a class="ui icon button" href="edit?id=<%=ret[i]['id']%>">
+          <i class="edit icon"></i>
+        </a>
+      </td>
+        <% } %>
+    </tr>
+    <% } %>
+    </tbody></table>
+  <% }}%>
 </div>
-
-
 
 <!--- Component JS -->
 <script src="semantic/dist/assets/library/jquery.min.js"></script>
@@ -140,6 +215,8 @@
 <script type="text/javascript" src="semantic/dist/components/popup.js"></script>
 <script type="text/javascript" src="semantic/dist/components/dropdown.js"></script>
 <script type="text/javascript" src="semantic/dist/components/transition.js"></script>
+<script type="text/javascript" src="semantic/dist/components/accordion.js"></script>
+<script type="text/javascript" src="semantic/dist/components/checkbox.js"></script>
 <script type="text/javascript" src="javascript/main.js"></script>
 
 </body>
