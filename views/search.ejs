@@ -56,16 +56,25 @@
           <label>또래</label>
           <select name="ddorae" multiple="" class="ui dropdown">
             <option value="">Select Age</option>
-            <option value="0">어린이</option>
+            <option value="0"
             <%
-              for (var i = 10; i < 61; i+=10) {
+              if (ddorae.includes('0')) { %>
+                    selected=""
+            <% } %>
+            >어린이</option>
+            <%
+              for (var i = 10; i < 51; i+=10) {
             %>
             <option value="<%=i%>"
             <%
             if (ddorae.includes(i.toString())) { %>
                     selected=""
             <% } %>
-            ><%=i%>대</option>
+            ><%=i%>대
+            <% if (i==50) { %>
+              이상
+            <% } %>
+            </option>
             <%
               }
             %>
@@ -126,7 +135,7 @@
   <br>
   <h4 class="ui horizontal divider header">
     <i class="tag icon"></i>
-    Members
+    Members (<%=count%>)
   </h4>
   <br>
   <% } %>
@@ -145,7 +154,7 @@
       <div class="column">
         <div class="ui card">
           <div class="image">
-            <img src="/images/<%=ret[i]['portrait']%>" alt="no portrait" onerror="this.src='/images/<%=default_img%>';">
+            <img src="/uploads/resize/<%=ret[i]['portrait']%>" alt="no portrait" onerror="this.src='/images/<%=default_img%>';">
           </div>
           <div class="content">
             <a class="header"><%=ret[i]['name']%> (<%=ret[i]['birth']%>)</a>
@@ -200,6 +209,9 @@
       <td>
         <a class="ui icon button" href="edit?id=<%=ret[i]['id']%>">
           <i class="edit icon"></i>
+        </a>
+        <a class="ui icon button" href="upload?id=<%=ret[i]['id']%>">
+          <i class="upload icon"></i>
         </a>
       </td>
         <% } %>

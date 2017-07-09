@@ -36,26 +36,16 @@ common.getAge = function(date) {
 
 common.checkSearch = function (qs) {
     var key;
-    var l = [];
     for (key in qs) {
-        l.push(key)
+        if (key == 'q' && qs[key].length > 0)
+            return true;
+        else if (key == 'ddorae' && qs[key].length > 0)
+            return true;
+        else if (key == 'birth' && qs[key].length > 0)
+            return true;
     }
 
-    if (l.length == 1 && ((l[0] == 'q' && l[0].length == 0) || l[0] == 'card_yn'))
-        return false;
-    else
-        return true;
+    return false;
 }
-
-/*
-Object.size = function(obj) {
-    var size = 0, key;
-    for (key in obj) {
-        if (obj.hasOwnProperty(key)) size++;
-    }
-    return size;
-};
-*/
-
 
 module.exports = common;

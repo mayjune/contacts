@@ -18,6 +18,7 @@ sql.init = function() {
             "month INTEGER, " +
             "phone TEXT, " +
             "first TEXT, " +
+            "portrait TEXT, " +
             "description INTEGER " +
             ")");
     });
@@ -25,7 +26,7 @@ sql.init = function() {
     db.close();
 };
 
-sql.insert = function(data) {
+sql.insert = function(data, res) {
     var sqlite3 = require('sqlite3').verbose();
     var db = new sqlite3.Database('db/contact.db');
 
@@ -50,6 +51,8 @@ sql.insert = function(data) {
         "\"" + data['description'] + "\"" +
         ")");
 
+    var last_id = '';
+
     db.run("INSERT into contact(" +
         "name, " +
         "sex, " +
@@ -71,6 +74,9 @@ sql.insert = function(data) {
         if (err) {
             console.log('do not insert data')
             console.log(err)
+        } else {
+            last_id = this.lastID;
+            res.redirect('/upload?id='+last_id);
         }
         db.close()
     });
@@ -105,6 +111,17 @@ sql.update = function (data) {
     db.run(sql_stmt);
     db.close();
 };
+
+sql.uploadImg = function (img_name, id) {
+    var sqlite3 = require('sqlite3').verbose();
+    var db = new sqlite3.Database('db/contact.db');
+    var sql_stmt = "update contact set " +
+        "portrait=\"" + img_name + "\" " +
+        "where id=" + id;
+    console.log(sql_stmt);
+    db.run(sql_stmt);
+    db.close();
+}
 
 sql.search = function (data) {
     var sqlite3 = require('sqlite3').verbose();

@@ -1,7 +1,34 @@
 var express = require('express');
 var sql = require('../utils/sql');
 var common = require('../utils/common');
+var multer = require('multer');
+var path = require('path');
+var storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, 'public/uploads/raw') // cb 콜백함수를 통해 전송된 파일 저장 디렉토리 설정
+    },
+    filename: function (req, file, cb) {
+        var date = new Date();
+        cb(null, '{}{}{}{}{}{}{}{}'.format(date.getFullYear(),
+                                date.getMonth(),
+                                date.getDay(),
+                                date.getHours(),
+                                date.getMinutes(),
+                                date.getSeconds(),
+                                date.getMilliseconds(),
+                                path.extname(file.originalname))) // cb 콜백함수를 통해 전송된 파일 이름 설정
+    }
+});
+var upload = multer({ storage: storage, limits: {fileSize: 5242880} });
+var gm = require('gm').subClass({imageMagick: true});
 var router = express.Router();
+
+String.prototype.format = function () {
+    var i = 0, args = arguments;
+    return this.replace(/{}/g, function () {
+        return typeof args[i] != 'undefined' ? args[i++] : '';
+    });
+};
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -100,7 +127,7 @@ router.get('/search', function(req, res, next) {
                             phone: rows[i].phone,
                             first: rows[i].first,
                             description: rows[i].description,
-                            portrait: rows[i].phone + '.png',
+                            portrait: rows[i].portrait,
                             age: common.getAge(rows[i].birthday)
                         };
 
@@ -109,9 +136,16 @@ router.get('/search', function(req, res, next) {
                                 var start = parseInt(ddorae[j]),
                                     end = start + 9;
 
-                                if (start <= d['age'] && d['age'] <= end) {
-                                    ret.push(d);
-                                    break;
+                                if (start == 50) {
+                                    if (start <= d['age']) {
+                                        ret.push(d);
+                                        break;
+                                    }
+                                } else {
+                                    if (start <= d['age'] && d['age'] <= end) {
+                                        ret.push(d);
+                                        break;
+                                    }
                                 }
                             }
                         } else {
@@ -120,7 +154,8 @@ router.get('/search', function(req, res, next) {
                     }
                 }
                 db.close()
-                res.render('search', {query: q, ddorae: ddorae, birth: birth, ret: ret, card_yn: card_yn, admin: admin});
+                res.render('search', {query: q, ddorae: ddorae, birth: birth,
+                    ret: ret, card_yn: card_yn, admin: admin, count: rows.length});
             });
         } else {
             res.render('search', {query: '', ddorae: [], birth: [], ret: [], card_yn: card_yn, admin: admin});
@@ -136,9 +171,10 @@ router.get('/create', function(req, res, next) {
     } else {
         var qs = req.query;
         if (!common.isEmpty(qs)) {
-            sql.insert(req.query);
+            sql.insert(req.query, res);
+        } else {
+            res.render('create', {title: 'Express'});
         }
-        res.render('create', {title: 'Express'});
     }
 });
 
@@ -212,6 +248,33 @@ router.get('/delete', function(req, res, next) {
         }
         res.redirect('/');
     }
+});
+
+router.get('/upload', function(req, res, next) {
+    var sess = req.session;
+    if (!sess.username) {
+        res.redirect('/');
+    } else {
+        var qs = req.query;
+        if (qs['id']) {
+            res.render('upload', {id: qs['id']});
+        } else {
+            res.redirect('/');
+        }
+    }
+});
+
+router.post('/upload', upload.single('userfile'), function(req, res){
+    if (req.file) {
+        gm('/Users/luffy.kim/WebstormProjects/contact-hanaui/public/uploads/raw/'+req.file.filename)
+            .resize(800, 800, '!')
+            .write('/Users/luffy.kim/WebstormProjects/contact-hanaui/public/uploads/resize/'+req.file.filename, function (err) {
+                if (err) console.error(err)
+                else console.log('done')
+            });
+        sql.uploadImg(req.file.filename, req.body.id);
+    }
+    res.redirect('/');
 });
 
 module.exports = router;
