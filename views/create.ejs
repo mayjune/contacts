@@ -63,7 +63,7 @@
     <div class="header">
       하.나.의. 교회에 오신것을 환영합니다.
     </div>
-    <p>주소록을 등록해 주셔서 감사합니다.</p>
+    <p>연락처를 등록해 주셔서 감사합니다.</p>
   </div>
   <form class="ui form attached fluid segment" onkeydown="return captureReturnKey(event)">
     <div class="two fields">
@@ -99,7 +99,7 @@
             <select name="year1" class="ui fluid dropdown">
               <option value="">년도</option>
               <%
-                for (var i = 1930; i <= new Date().getFullYear(); i++) {
+                for(var i = new Date().getFullYear(); i >= 1930; i--) {
               %>
               <option value="<%=i%>"><%=i%></option>
               <%
