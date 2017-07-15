@@ -266,9 +266,10 @@ router.get('/upload', function(req, res, next) {
 
 router.post('/upload', upload.single('userfile'), function(req, res){
     if (req.file) {
-        gm('/Users/luffy.kim/WebstormProjects/contact-hanaui/public/uploads/raw/'+req.file.filename)
+        var upload_dir = __dirname +"/../public/uploads";
+        gm(upload_dir+'/raw/'+req.file.filename)
             .resize(800, 800, '!')
-            .write('/Users/luffy.kim/WebstormProjects/contact-hanaui/public/uploads/resize/'+req.file.filename, function (err) {
+            .write(upload_dir+'/resize/'+req.file.filename, function (err) {
                 if (err) console.error(err)
                 else console.log('done')
             });
