@@ -105,6 +105,20 @@
         <label>생년월일</label>
         <div class="inline fields">
           <div class="field">
+            <select name="is_lunar" class="ui fluid dropdown">
+              <option value="0"
+                      <% if (!data['is_lunar']) { %>
+                      selected
+                      <% } %>
+              >양력</option>
+              <option value="1"
+                      <% if (data['is_lunar']) { %>
+                      selected
+                      <% } %>
+              >음력</option>
+            </select>
+          </div>
+          <div class="field">
             <select name="year1" class="ui fluid dropdown">
               <option value="">년도</option>
               <%

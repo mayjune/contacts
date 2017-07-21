@@ -112,7 +112,7 @@ router.get('/search', function(req, res, next) {
 
             sql_stmt += 'order by birthday';
 
-            console.log(sql_stmt)
+            console.log(sql_stmt);
             db.all(sql_stmt, function (err, rows) {
                 var ret = [];
                 if (err) {
@@ -128,6 +128,7 @@ router.get('/search', function(req, res, next) {
                             first: rows[i].first,
                             description: rows[i].description,
                             portrait: rows[i].portrait,
+                            is_lunar: rows[i].is_lunar,
                             age: common.getAge(rows[i].birthday)
                         };
 
@@ -212,7 +213,8 @@ router.get('/edit', function(req, res, next) {
                         month1: birth[1],
                         day1: birth[2],
                         year2: first[0],
-                        month2: first[1]
+                        month2: first[1],
+                        is_lunar: rows[0].is_lunar
                     };
                 } else {
                     console.log('error: no exist id: ' + id);

@@ -19,7 +19,8 @@ sql.init = function() {
             "phone TEXT, " +
             "first TEXT, " +
             "portrait TEXT, " +
-            "description INTEGER " +
+            "description INTEGER, " +
+            "is_lunar BOOLEAN" +
             ")");
     });
 
@@ -40,7 +41,8 @@ sql.insert = function(data, res) {
         "month, " +
         "phone, " +
         "first, " +
-        "description " +
+        "description, " +
+        "is_lunar" +
         ") VALUES (" +
         "\"" + data['name'] + "\"" + "," +
         "\"" + data['sex'] + "\"" + "," +
@@ -48,7 +50,8 @@ sql.insert = function(data, res) {
         "\"" + data['month1'] + "\"" + "," +
         "\"" + data['phone'] + "\"" + "," +
         "\"" + first + "\"" + "," +
-        "\"" + data['description'] + "\"" +
+        "\"" + data['description'] + "\"" + "," +
+        "\"" + data['is_lunar'] + "\"" +
         ")");
 
     var last_id = '';
@@ -60,7 +63,8 @@ sql.insert = function(data, res) {
         "month, " +
         "phone, " +
         "first, " +
-        "description " +
+        "description, " +
+        "is_lunar " +
         ") VALUES (" +
         "\"" + data['name'] + "\"" + "," +
         "\"" + data['sex'] + "\"" + "," +
@@ -68,7 +72,8 @@ sql.insert = function(data, res) {
         "\"" + data['month1'] + "\"" + "," +
         "\"" + data['phone'] + "\"" + "," +
         "\"" + first + "\"" + "," +
-        "\"" + data['description'] + "\"" +
+        "\"" + data['description'] + "\"" + "," +
+        "\"" + data['is_lunar'] + "\"" +
         ")", function (err){
 
         if (err) {
@@ -104,7 +109,8 @@ sql.update = function (data) {
         "month=\"" + data['month1'] + "\", " +
         "phone=\"" + data['phone'] + "\", " +
         "first=\"" + first + "\", " +
-        "description=\"" + data['description'] + "\" " +
+        "description=\"" + data['description'] + "\", " +
+        "is_lunar=\"" + data['is_lunar'] + "\" " +
         "where id=" + data['id'];
 
     console.log(sql_stmt);
@@ -151,7 +157,8 @@ sql.search = function (data) {
                     phone: row.phone,
                     year2: first[0],
                     month2: first[1],
-                    description: row.description
+                    description: row.description,
+                    is_lunar: row.is_lunar
                 };
                 res.push(d);
             });

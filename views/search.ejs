@@ -158,7 +158,13 @@
             <img src="/uploads/resize/<%=ret[i]['portrait']%>" alt="no portrait" onerror="this.src='/images/<%=default_img%>';">
           </div>
           <div class="content">
-            <a class="header"><%=ret[i]['name']%> (<%=ret[i]['birth']%>)</a>
+            <a class="header"><%=ret[i]['name']%> (<i class="
+            <% if (ret[i]['is_lunar']) { %>
+            minus
+            <% } else { %>
+            plus
+            <% } %>
+            square outline icon"></i><%=ret[i]['birth']%>)</a>
             <div class="meta">
               <span class="date">Joined in <%=ret[i]['first']%></span>
             </div>
@@ -204,7 +210,13 @@
         <i class="male icon"></i>
         <% } %>
         <%=ret[i]['name']%></td>
-      <td><%=ret[i]['birth']%> (<%=ret[i]['age']%>세)</td>
+      <td>
+        <% if (ret[i]['is_lunar']) {%>
+          음력
+        <% } else { %>
+          양력
+        <% } %>
+          , <%=ret[i]['birth']%> (<%=ret[i]['age']%>세)</td>
       <td><%=ret[i]['phone']%></td>
         <% if (admin) { %>
       <td>
