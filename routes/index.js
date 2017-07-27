@@ -156,7 +156,7 @@ router.get('/search', function(req, res, next) {
                 }
                 db.close()
                 res.render('search', {query: q, ddorae: ddorae, birth: birth,
-                    ret: ret, card_yn: card_yn, admin: admin, count: rows.length});
+                    ret: ret, card_yn: card_yn, admin: admin});
             });
         } else {
             res.render('search', {query: '', ddorae: [], birth: [], ret: [], card_yn: card_yn, admin: admin});
