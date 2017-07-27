@@ -97,28 +97,6 @@
               }
             %>
           </select>
-          <div class="ui accordion">
-            <div class="title">
-              <i class="dropdown icon"></i>
-              Search Options
-            </div>
-            <div class="content">
-              <div class="inline field">
-                <div class="ui grid">
-                  <div class="four wide column">
-                    <div class="ui toggle checkbox">
-                      <input name="card_yn" value="on" type="checkbox" tabindex="0" class="hidden" <% if (card_yn) { %> checked <% } %>>
-                      <label>CardView</label>
-                    </div>
-                  </div>
-                  <div class="four wide column">
-                  </div>
-                  <div class="four wide column">
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
         </div>
         <div class="field">
           <label>검색</label>
@@ -126,6 +104,18 @@
             <input type="text" name="q" placeholder="Search..." value="<%=query%>">
             <!--<i class="inverted circular search link icon"></i> -->
               <button class="ui button yellow" type="submit">검색</button>
+          </div>
+          <div class="inline field">
+            <div class="ui grid">
+              <div class="eight wide column">
+                <div class="ui toggle checkbox">
+                  <input name="card_yn" value="on" type="checkbox" tabindex="0" class="hidden" <% if (card_yn) { %> checked <% } %>>
+                  <label>사진보기</label>
+                </div>
+              </div>
+              <div class="four wide column">
+              </div>
+            </div>
           </div>
         </div>
       </div>
