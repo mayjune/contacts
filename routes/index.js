@@ -110,8 +110,6 @@ router.get('/search', function(req, res, next) {
                 sql_stmt += "month in (" + birth.join(',') + ") ";
             }
 
-            sql_stmt += 'order by birthday';
-
             console.log(sql_stmt);
             db.all(sql_stmt, function (err, rows) {
                 var ret = [];
@@ -119,6 +117,17 @@ router.get('/search', function(req, res, next) {
                     console.log('fail to search: ' + err)
                 } else {
                     for (var i = 0; i < rows.length; i++) {
+                        var arr = rows[i].birthday.split(".")
+                        var year = arr[0],
+                            month = arr[1],
+                            day = arr[2];
+
+                        if (month.length == 1)
+                            month = '0' + month
+                        if (day.length == 1)
+                            day = '0' + day
+
+                        rows[i].birthday = year + '.' + month + '.' + day
                         var d = {
                             id: rows[i].id,
                             name: rows[i].name,
@@ -154,9 +163,16 @@ router.get('/search', function(req, res, next) {
                         }
                     }
                 }
-                db.close()
+                db.close();
+                var sorted_ret = ret.sort(function (a, b) {
+                    if (a['birth'] < b['birth'])
+                        return -1;
+                    if (a['birth'] > b['birth'])
+                        return 1;
+                    return 0;
+                })
                 res.render('search', {query: q, ddorae: ddorae, birth: birth,
-                    ret: ret, card_yn: card_yn, admin: admin});
+                    ret: sorted_ret, card_yn: card_yn, admin: admin});
             });
         } else {
             res.render('search', {query: '', ddorae: [], birth: [], ret: [], card_yn: card_yn, admin: admin});
